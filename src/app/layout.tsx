@@ -40,6 +40,7 @@ const frameMetadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   // Initialize Farcaster SDK and hide splash screen when ready
   useEffect(() => {
+    // Call ready as soon as possible while avoiding jitter
     sdk.actions.ready({ disableNativeGestures: true });
   }, []);
 
