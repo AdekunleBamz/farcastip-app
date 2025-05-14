@@ -1,10 +1,28 @@
-export const MONAD_TESTNET = {
-  chainId: 10143,
+import { defineChain } from 'viem';
+
+export const MONAD_TESTNET = defineChain({
+  id: 10143,
   name: 'Monad Testnet',
-  currency: 'MON',
-  explorerUrl: 'https://testnet.monadexplorer.com',
-  rpcUrl: 'https://testnet-rpc.monad.xyz'
-};
+  nativeCurrency: {
+    name: 'MON',
+    symbol: 'MON',
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://testnet-rpc.monad.xyz'],
+    },
+    public: {
+      http: ['https://testnet-rpc.monad.xyz'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Monad Explorer',
+      url: 'https://testnet.monadexplorer.com',
+    },
+  },
+});
 
 // Farcaster API endpoints
 export const FARCASTER_API = {
