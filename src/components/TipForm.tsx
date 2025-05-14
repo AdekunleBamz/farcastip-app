@@ -1,0 +1,89 @@
+"use client";
+
+import { useState } from "react";
+import { useAccount, useConnect, useSendTransaction } from 'wagmi';
+import { MONAD_TESTNET } from '../config/constants';
+import { resolveFarcasterUsername } from '../utils/farcaster';
+import { parseEther } from 'viem';
+
+export function TipForm() {
+  const { connect, connectors } = useConnect();
+  const { isConnected, address } = useAccount();
+  const [recipient, setRecipient] = useState("");
+  const [amount, setAmount] = useState("");
+  const [isResolvingUsername, setIsResolvingUsername] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Use sendTransaction instead of contract write
+  const { sendTransaction, isLoading: isSending } = useSendTransaction();
+
+  const handleRecipientChange = async (value: string) => {
+    setRecipient(value);
+    setError(null);
+
+    if (value.startsWith('@')) {
+      setIsResolvingUsername(true);
+      try {
+        const resolvedAddress = await resolveFarcasterUsername(value.slice(1));
+        if (resolvedAddress) {
+          setRecipient(resolvedAddress);
+        } else {
+          setError("Could not resolve Farcaster username");
+        }
+      } catch (err) {
+        console.error("Error resolving username:", err);
+        setError("Error resolving Farcaster username");
+      } finally {
+        setIsResolvingUsername(false);
+      }
+    }
+  };
+
+  const handleSendTip = async () => {
+    if (!isConnected || !address) {
+      setError("Please connect your wallet first");
+      return;
+    }
+
+    if (!recipient || !amount) {
+      setError("Please fill in all fields");
+      return;
+    }
+
+    try {
+      // Convert amount to wei (smallest unit)
+      const amountInWei = parseEther(amount);
+      
+      // Send native MON token
+      sendTransaction({
+        to: recipient,
+        value: amountInWei
+      });
+    } catch (err) {
+      console.error("Error sending tip:", err);
+      setError(err instanceof Error ? err.message : "Failed to send tip");
+    }
+  };
+
+  // Add wallet connection handler
+  const handleConnect = () => {
+    const connector = connectors[0]; // Using the first connector (Farcaster Frame)
+    if (connector) {
+      connect({ connector });
+    }
+  };
+
+  if (!isConnected) {
+    return (
+      <div className="text-center">
+        <p className="mb-4">Connect your wallet to start sending MON tips</p>
+        <button 
+          onClick={handleConnect}
+          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+        >
+          Connect Wallet
+        </button>
+      </div>
+    );
+  }
+} 

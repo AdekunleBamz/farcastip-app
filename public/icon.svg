@@ -1,0 +1,10 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="512" height="512" fill="#4F46E5"/>
+  <!-- Tip Jar -->
+  <path d="M256 128C200 128 160 180 160 240C160 300 200 352 256 352C312 352 352 300 352 240C352 180 312 128 256 128Z" fill="#818CF8"/>
+  <!-- MON Text -->
+  <text x="256" y="280" text-anchor="middle" fill="white" font-size="120" font-family="Arial, sans-serif" font-weight="bold">MON</text>
+  <!-- Sparkles -->
+  <path d="M128 128L144 144M384 128L368 144M128 384L144 368M384 384L368 368" stroke="white" stroke-width="8" stroke-linecap="round"/>
+</svg> 

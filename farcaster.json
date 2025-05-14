@@ -1,0 +1,17 @@
+{
+  "name": "FarcasTip",
+  "description": "Send MON test tokens as tips on Monad testnet",
+  "icon": "https://farcastip.vercel.app/icon.png",
+  "url": "https://farcastip.vercel.app",
+  "action": {
+    "default": {
+      "title": "Send MON Tip",
+      "description": "Send MON test tokens as tips on Monad testnet"
+    }
+  },
+  "permissions": [
+    "crypto"
+  ],
+  "splashImageUrl": "https://farcastip.vercel.app/splash.png",
+  "splashBackgroundColor": "#4F46E5"
+} 
