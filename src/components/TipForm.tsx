@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useAccount, useConnect, useSendTransaction } from 'wagmi';
 import { MONAD_TESTNET } from '../config/constants';
 import { resolveFarcasterUsername } from '../utils/farcaster';
-import { parseEther } from 'viem';
+import { parseEther, isAddress } from 'viem';
 
 export function TipForm() {
   const { connect, connectors } = useConnect();
@@ -25,10 +25,10 @@ export function TipForm() {
       setIsResolvingUsername(true);
       try {
         const resolvedAddress = await resolveFarcasterUsername(value.slice(1));
-        if (resolvedAddress) {
+        if (resolvedAddress && isAddress(resolvedAddress)) {
           setRecipient(resolvedAddress);
         } else {
-          setError("Could not resolve Farcaster username");
+          setError("Could not resolve Farcaster username to a valid address");
         }
       } catch (err) {
         console.error("Error resolving username:", err);
@@ -36,6 +36,8 @@ export function TipForm() {
       } finally {
         setIsResolvingUsername(false);
       }
+    } else if (value && !isAddress(value)) {
+      setError("Please enter a valid Ethereum address");
     }
   };
 
@@ -50,11 +52,16 @@ export function TipForm() {
       return;
     }
 
+    if (!isAddress(recipient)) {
+      setError("Please enter a valid Ethereum address");
+      return;
+    }
+
     try {
       const amountInWei = parseEther(amount);
       
       await sendTransaction({
-        to: recipient,
+        to: recipient as `0x${string}`,
         value: amountInWei
       });
     } catch (err) {
