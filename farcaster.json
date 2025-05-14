@@ -1,22 +1,22 @@
 {
   "name": "FarcasTip",
   "description": "Send MON test tokens as tips on Monad testnet",
-  "url": "https://farcastip.vercel.app",
-  "icon": "https://farcastip.vercel.app/icon.png",
+  "url": "https://farcastipmini.vercel.app",
+  "icon": "https://farcastipmini.vercel.app/icon.png",
   "splash": {
-    "image": "https://farcastip.vercel.app/splash.png",
+    "image": "https://farcastipmini.vercel.app/splash.png",
     "backgroundColor": "#4F46E5"
   },
   "frame": {
     "version": "next",
-    "image": "https://farcastip.vercel.app/og-image.png",
+    "image": "https://farcastipmini.vercel.app/og-image.png",
     "button": {
       "title": "Send MON Tip",
       "action": {
         "type": "launch_frame",
-        "url": "https://farcastip.vercel.app",
+        "url": "https://farcastipmini.vercel.app",
         "name": "FarcasTip",
-        "splashImageUrl": "https://farcastip.vercel.app/splash.png",
+        "splashImageUrl": "https://farcastipmini.vercel.app/splash.png",
         "splashBackgroundColor": "#4F46E5"
       }
     }
