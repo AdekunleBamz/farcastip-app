@@ -21,7 +21,7 @@ const config = createConfig({
     })
   ],
   transports: {
-    [MONAD_TESTNET.id]: http(MONAD_TESTNET.rpcUrl)
+    [MONAD_TESTNET.id]: http()
   }
 });
 
