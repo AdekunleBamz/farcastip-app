@@ -14,8 +14,8 @@ export function TipForm() {
   const [isResolvingUsername, setIsResolvingUsername] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Use sendTransaction instead of contract write
-  const { sendTransaction, isLoading: isSending } = useSendTransaction();
+  // Updated for wagmi v2
+  const { sendTransaction, isPending } = useSendTransaction();
 
   const handleRecipientChange = async (value: string) => {
     setRecipient(value);
@@ -51,11 +51,9 @@ export function TipForm() {
     }
 
     try {
-      // Convert amount to wei (smallest unit)
       const amountInWei = parseEther(amount);
       
-      // Send native MON token
-      sendTransaction({
+      await sendTransaction({
         to: recipient,
         value: amountInWei
       });
