@@ -24,14 +24,14 @@ const config = createConfig({
 // Frame metadata for sharing
 const frameMetadata = {
   version: "next",
-  imageUrl: "/og-image.png",
+  imageUrl: "https://farcastip.vercel.app/og-image.png",
   button: {
     title: "Send MON Tip",
     action: {
       type: "launch_frame",
       url: 'https://farcastip.vercel.app',
       name: "FarcasTip",
-      splashImageUrl: "/splash.png",
+      splashImageUrl: "https://farcastip.vercel.app/splash.png",
       splashBackgroundColor: "#4F46E5"
     }
   }
