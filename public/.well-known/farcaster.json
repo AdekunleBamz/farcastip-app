@@ -8,9 +8,9 @@
   "publisher": "Bamzz",
 
   "accountAssociation": {
-    "header": "eyJhbGciOiJFUzI1NksiLCJ0eXAiOiJKV1QifQ",
+    "header": "eyJmaWQiOjY1MzQ3OSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDBjMDkwNjQzOUM2YTZiRDVmNzI0MDkyZjdCZWNlZDkyY2ZhNDI4QTEifQ",
     "payload": "eyJkb21haW4iOiJmYXJjYXN0aXBtaW5pLnZlcmNlbC5hcHAifQ",
-    "signature": "pWfz_U8sHRy6NNF0OYQIh73IXttg6b3FHPJiKmJdvf93m9jhS-ATLXKgV2xVGWOCuonbaF4Z3VPZ54ZsVLJ1UBw"
+    "signature": "TJAr9aYSnRQSzrdxWHY3DvbaUIIw-Ep3KnYn-hwI3UViEjWNnH8_wBg6QY-7RFXQx8tvEZaR05ygrcBpnqyGHBs"
   },
 
   "frame": {
