@@ -5,20 +5,34 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { farcasterFrame } from '@farcaster/frame-wagmi-connector';
 import { sdk } from '@farcaster/frame-sdk';
 import { MONAD_TESTNET } from '../config/constants';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-// Create a client
-const queryClient = new QueryClient();
+// Create a client with persistence
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      cacheTime: 1000 * 60 * 30, // 30 minutes
+    },
+  },
+});
 
-// Configure wagmi with Farcaster Frame connector
+// Configure wagmi with Farcaster Frame connector and persistence
 const config = createConfig({
   chains: [MONAD_TESTNET],
   connectors: [
-    farcasterFrame()
+    farcasterFrame({
+      // Add connection persistence
+      shimDisconnect: true,
+      // Increase timeout
+      timeout: 30000, // 30 seconds
+    })
   ],
   transports: {
     [MONAD_TESTNET.id]: http()
-  }
+  },
+  // Add storage for persistence
+  storage: typeof window !== 'undefined' ? window.localStorage : undefined,
 });
 
 // Frame metadata for sharing
@@ -38,11 +52,19 @@ const frameMetadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const [mounted, setMounted] = useState(false);
+
   // Initialize Farcaster SDK and hide splash screen when ready
   useEffect(() => {
     // Call ready as soon as possible while avoiding jitter
     sdk.actions.ready({ disableNativeGestures: true });
+    setMounted(true);
   }, []);
+
+  // Prevent hydration mismatch
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <html lang="en">
