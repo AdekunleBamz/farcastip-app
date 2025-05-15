@@ -1,36 +1,10 @@
 {
   "name": "FarcasTip",
-  "description": "Tip users MON tokens easily through Farcaster frames.",
+  "description": "Send MON tips on Monad testnet. A simple and secure way to tip your favorite Farcaster users with MON tokens.",
   "icon": "https://farcastipmini.vercel.app/icon.png",
-  "website": "https://farcastipmini.vercel.app",
-  "redirectUris": ["https://farcastipmini.vercel.app"],
-  "appUrl": "https://farcastipmini.vercel.app",
-  "publisher": "Bamzz",
-  "version": "1.0.0",
-
-  "accountAssociation": {
-    "header": "eyJmaWQiOjY1MzQ3OSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDBjMDkwNjQzOUM2YTZiRDVmNzI0MDkyZjdCZWNlZDkyY2ZhNDI4QTEifQ",
-    "payload": "eyJkb21haW4iOiJmYXJjYXN0aXBtaW5pLnZlcmNlbC5hcHAifQ",
-    "signature": "MHg0YzkwMmJmNWE2MTI5ZDE0MTJjZWI3NzE1ODc2MzcwZWY2ZGE1MDgyMzBmODRhNzcyYTc2MjdmYTFjMDhkZDQ1NjIxMjM1OGQ5YzdmM2ZjMDE4M2E0MThmYmI0NDU1ZDBjN2NiNmYxMTk2OTFkMzljYTBhZGMwNjk5ZWFjODYxYzFi"
-  },
-
-  "frame": {
-    "version": "1",
-    "name": "FarcasTip",
-    "description": "Send MON tips on Monad testnet. A simple and secure way to tip your favorite Farcaster users with MON tokens.",
-    "homeUrl": "https://farcastipmini.vercel.app",
-    "iconUrl": "https://farcastipmini.vercel.app/icon.png",
-    "splashImageUrl": "https://farcastipmini.vercel.app/og-image.png",
-    "splashBackgroundColor": "#4F46E5",
-    "postUrl": "https://farcastipmini.vercel.app/api/frame",
-    "input": {
-      "text": "Enter Farcaster username or address"
-    },
-    "buttons": [
-      {
-        "label": "Send MON Tip",
-        "action": "post_redirect"
-      }
-    ]
-  }
+  "splash": "https://farcastipmini.vercel.app/splash.png",
+  "og_image": "https://farcastipmini.vercel.app/og-image.png",
+  "app_url": "https://farcastipmini.vercel.app",
+  "frame_url": "https://farcastipmini.vercel.app/api/frame",
+  "version": "1"
 }
