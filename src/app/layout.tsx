@@ -47,17 +47,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           disableNativeGestures: true
         });
 
-        // Attempt to restore any existing connection
+        // Check for stored connection data
         if (typeof window !== 'undefined') {
           try {
             const storedConnection = localStorage.getItem('farcastip-wagmi-cache');
             if (storedConnection) {
-              // Only attempt to connect if we have stored data
-              await sdk.actions.connect();
+              // The wagmi storage will handle the connection restoration
+              // We just need to ensure the SDK is ready
+              console.log('Found stored connection data');
             }
-          } catch (connectionError) {
-            // Log connection error but don't throw
-            console.error('Connection restoration failed:', connectionError);
+          } catch (storageError) {
+            // Log storage error but don't throw
+            console.error('Storage access failed:', storageError);
             // Clear potentially corrupted storage
             localStorage.removeItem('farcastip-wagmi-cache');
           }
