@@ -95,37 +95,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         
-        {/* Enhanced meta tags for better embed detection */}
+        {/* Basic meta tags */}
         <meta name="description" content="Send MON tips on Monad testnet. A simple and secure way to tip your favorite Farcaster users with MON tokens." />
+        <meta name="theme-color" content="#4F46E5" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         
-        {/* Updated OpenGraph tags */}
-        <meta property="og:url" content="https://farcastipmini.vercel.app" />
+        {/* OpenGraph tags */}
         <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://farcastipmini.vercel.app" />
         <meta property="og:title" content="FarcasTip - Send MON Tips" />
         <meta property="og:description" content="Send MON tips on Monad testnet. A simple and secure way to tip your favorite Farcaster users with MON tokens." />
         <meta property="og:image" content="https://farcastipmini.vercel.app/og-image.png" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
+        <meta property="og:image:width" content="3750" />
+        <meta property="og:image:height" content="1969" />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:site_name" content="FarcasTip" />
-        
-        {/* Updated Twitter Card tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@farcastip" />
-        <meta name="twitter:title" content="FarcasTip - Send MON Tips" />
-        <meta name="twitter:description" content="Send MON tips on Monad testnet. A simple and secure way to tip your favorite Farcaster users with MON tokens." />
-        <meta name="twitter:image" content="https://farcastipmini.vercel.app/og-image.png" />
-        
-        {/* Updated Farcaster Frame tags */}
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="FarcasTip - Send MON Tips" />
-        <meta property="og:description" content="Send MON tips on Monad testnet. A simple and secure way to tip your favorite Farcaster users with MON tokens." />
-        <meta property="og:image" content="https://farcastipmini.vercel.app/og-image.png" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:type" content="image/png" />
-        <meta property="og:site_name" content="FarcasTip" />
-        <meta property="og:url" content="https://farcastipmini.vercel.app" />
         
         {/* Twitter Card tags */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -145,14 +130,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta property="fc:frame:state" content="{}" />
         
         {/* Required meta tags for frame detection */}
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        
-        {/* Additional meta tags */}
-        <meta name="theme-color" content="#4F46E5" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         
         <link rel="icon" href="/icon.png" />
         <link rel="canonical" href="https://farcastipmini.vercel.app" />
