@@ -22,7 +22,9 @@ export function TipForm() {
   const { switchChain } = useSwitchChain();
   const { data: balance } = useBalance({
     address,
-    watch: true,
+    query: {
+      refetchInterval: 5000, // Refetch every 5 seconds
+    }
   });
   const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState("");
