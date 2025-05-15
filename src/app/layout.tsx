@@ -111,9 +111,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Updated Farcaster Frame tags */}
         <meta property="fc:frame" content="vNext" />
         <meta property="fc:frame:image" content="https://farcastipmini.vercel.app/og-image.png" />
+        <meta property="fc:frame:image:aspect_ratio" content="1.91:1" />
         <meta property="fc:frame:button:1" content="Send MON Tip" />
+        <meta property="fc:frame:button:1:action" content="post_redirect" />
         <meta property="fc:frame:post_url" content="https://farcastipmini.vercel.app/api/frame" />
         <meta property="fc:frame:input:text" content="Enter Farcaster username or address" />
+        <meta property="fc:frame:state" content="{}" />
         
         {/* Additional meta tags */}
         <meta name="theme-color" content="#4F46E5" />

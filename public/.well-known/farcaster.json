@@ -14,11 +14,15 @@
   },
 
   "frame": {
-    "version": "1",
+    "version": "vNext",
     "name": "FarcasTip",
     "homeUrl": "https://farcastipmini.vercel.app",
     "iconUrl": "https://farcastipmini.vercel.app/icon.png",
     "splashImageUrl": "https://farcastipmini.vercel.app/splash.png",
-    "splashBackgroundColor": "#4F46E5"
+    "splashBackgroundColor": "#4F46E5",
+    "postUrl": "https://farcastipmini.vercel.app/api/frame",
+    "input": {
+      "text": "Enter Farcaster username or address"
+    }
   }
 }
