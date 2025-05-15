@@ -42,42 +42,50 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   // Initialize Farcaster SDK and handle connection persistence
   useEffect(() => {
+    let mounted = true;
+
     const init = async () => {
       try {
-        // Initialize SDK with basic options
-        await sdk.actions.ready({ 
-          disableNativeGestures: true
-        });
-
-        // Check for stored connection data
-        if (typeof window !== 'undefined') {
-          try {
-            const storedConnection = localStorage.getItem('farcastip-wagmi-cache');
-            if (storedConnection) {
-              console.log('Found stored connection data');
-            }
-          } catch (storageError) {
-            console.error('Storage access failed:', storageError);
-            localStorage.removeItem('farcastip-wagmi-cache');
-          }
+        // Initialize SDK with minimal options
+        await sdk.actions.ready();
+        
+        // Only update state if component is still mounted
+        if (mounted) {
+          setMounted(true);
         }
-
-        setMounted(true);
       } catch (error) {
         console.error('Farcaster SDK initialization failed:', error);
-        setMounted(true);
+        // Still set mounted to true to allow the app to function
+        if (mounted) {
+          setMounted(true);
+        }
       }
     };
 
-    init().catch(error => {
-      console.error('Unexpected error during initialization:', error);
-      setMounted(true);
-    });
+    // Start initialization
+    init();
+
+    // Cleanup function
+    return () => {
+      mounted = false;
+    };
   }, []);
 
-  // Prevent hydration mismatch
+  // Show loading state while initializing
   if (!mounted) {
-    return null;
+    return (
+      <html lang="en" className="h-full bg-gradient-to-br from-indigo-50 to-blue-50">
+        <head>
+          <title>FarcasTip - Loading...</title>
+        </head>
+        <body className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Loading FarcasTip...</p>
+          </div>
+        </body>
+      </html>
+    );
   }
 
   return (
@@ -126,8 +134,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="twitter:description" content="Send MON tips on Monad testnet. A simple and secure way to tip your favorite Farcaster users with MON tokens." />
         <meta name="twitter:image" content="https://farcastipmini.vercel.app/og-image.png" />
         
-        {/* Farcaster Frame tags */}
-        <meta property="fc:frame" content="vNext" />
+        {/* Farcaster Frame tags - Updated for v1 */}
+        <meta property="fc:frame" content="1" />
         <meta property="fc:frame:image" content="https://farcastipmini.vercel.app/og-image.png" />
         <meta property="fc:frame:image:aspect_ratio" content="1.91:1" />
         <meta property="fc:frame:button:1" content="Send MON Tip" />
@@ -135,6 +143,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta property="fc:frame:post_url" content="https://farcastipmini.vercel.app/api/frame" />
         <meta property="fc:frame:input:text" content="Enter Farcaster username or address" />
         <meta property="fc:frame:state" content="{}" />
+        
+        {/* Required meta tags for frame detection */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         
         {/* Additional meta tags */}
         <meta name="theme-color" content="#4F46E5" />
