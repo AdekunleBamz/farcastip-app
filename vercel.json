@@ -7,5 +7,16 @@
   "regions": ["iad1"],
   "env": {
     "NEXT_PUBLIC_APP_URL": "https://farcastip.vercel.app"
-  }
-} 
+  },
+  "headers": [
+    {
+      "source": "/.well-known/farcaster.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    }
+  ]
+}
