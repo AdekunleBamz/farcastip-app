@@ -114,17 +114,20 @@ export function TipForm() {
 
   if (!isConnected) {
     return (
-      <div className="card text-center p-8 animate-float">
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome to FarcasTip</h1>
-          <p className="text-gray-600">Connect your wallet to start sending MON tips on Monad Testnet</p>
+      <div className="space-y-6">
+        {/* App Description */}
+        <div className="card text-center p-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">Welcome to FarcasTip</h1>
+          <p className="text-lg text-gray-600 mb-6">
+            FarcasTip is a simple way to send MON tokens on Monad Testnet. Connect your wallet, enter a Farcaster username or address, and send tips instantly. MON tokens are for testing purposes only.
+          </p>
+          <button 
+            onClick={handleConnect}
+            className="btn-primary text-lg px-8 py-3"
+          >
+            Connect Wallet
+          </button>
         </div>
-        <button 
-          onClick={handleConnect}
-          className="btn-primary text-lg px-8 py-3"
-        >
-          Connect Wallet
-        </button>
       </div>
     );
   }
@@ -137,7 +140,7 @@ export function TipForm() {
           <div className="ml-3">
             <h3 className="text-sm font-medium text-blue-800">Monad Testnet</h3>
             <p className="text-sm text-blue-700 mt-1">
-              FarcasTip is a simple way to send MON tokens on Monad Testnet. Connect your wallet, enter a Farcaster username or address, and send tips instantly. MON tokens are for testing purposes only.
+              You're connected to Monad Testnet. Ready to send MON tips!
             </p>
           </div>
         </div>

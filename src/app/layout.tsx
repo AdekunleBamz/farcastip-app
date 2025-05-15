@@ -109,6 +109,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="twitter:image" content="https://farcastipmini.vercel.app/og-image.png" />
         
         {/* Updated Farcaster Frame tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="FarcasTip - Send MON Tips" />
+        <meta property="og:description" content="Send MON tips on Monad testnet. A simple and secure way to tip your favorite Farcaster users with MON tokens." />
+        <meta property="og:image" content="https://farcastipmini.vercel.app/og-image.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:site_name" content="FarcasTip" />
+        <meta property="og:url" content="https://farcastipmini.vercel.app" />
+        
+        {/* Twitter Card tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@farcastip" />
+        <meta name="twitter:title" content="FarcasTip - Send MON Tips" />
+        <meta name="twitter:description" content="Send MON tips on Monad testnet. A simple and secure way to tip your favorite Farcaster users with MON tokens." />
+        <meta name="twitter:image" content="https://farcastipmini.vercel.app/og-image.png" />
+        
+        {/* Farcaster Frame tags */}
         <meta property="fc:frame" content="vNext" />
         <meta property="fc:frame:image" content="https://farcastipmini.vercel.app/og-image.png" />
         <meta property="fc:frame:image:aspect_ratio" content="1.91:1" />
