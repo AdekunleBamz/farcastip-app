@@ -42,34 +42,40 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   useEffect(() => {
     const init = async () => {
       try {
-        // Initialize SDK with persistence options
+        // Initialize SDK with basic options
         await sdk.actions.ready({ 
-          disableNativeGestures: true,
-          onError: (error) => {
-            console.error('Farcaster SDK error:', error);
-          }
+          disableNativeGestures: true
         });
 
         // Attempt to restore any existing connection
         if (typeof window !== 'undefined') {
-          const storedConnection = localStorage.getItem('farcastip-wagmi-cache');
-          if (storedConnection) {
-            try {
-              // Trigger a reconnection if we have stored data
+          try {
+            const storedConnection = localStorage.getItem('farcastip-wagmi-cache');
+            if (storedConnection) {
+              // Only attempt to connect if we have stored data
               await sdk.actions.connect();
-            } catch (error) {
-              console.error('Failed to restore connection:', error);
             }
+          } catch (connectionError) {
+            // Log connection error but don't throw
+            console.error('Connection restoration failed:', connectionError);
+            // Clear potentially corrupted storage
+            localStorage.removeItem('farcastip-wagmi-cache');
           }
         }
 
         setMounted(true);
       } catch (error) {
-        console.error('Failed to initialize Farcaster SDK:', error);
-        setMounted(true); // Still set mounted to true to show the app
+        // Log initialization error but still show the app
+        console.error('Farcaster SDK initialization failed:', error);
+        setMounted(true);
       }
     };
-    init();
+
+    // Start initialization
+    init().catch(error => {
+      console.error('Unexpected error during initialization:', error);
+      setMounted(true);
+    });
   }, []);
 
   // Prevent hydration mismatch
