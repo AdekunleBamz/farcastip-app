@@ -6,6 +6,7 @@ import { farcasterFrame } from '@farcaster/frame-wagmi-connector';
 import { sdk } from '@farcaster/frame-sdk';
 import { MONAD_TESTNET } from '../config/constants';
 import { useEffect, useState } from 'react';
+import { createStorage } from 'wagmi';
 
 // Create a client with persistence
 const queryClient = new QueryClient({
@@ -26,8 +27,8 @@ const config = createConfig({
   transports: {
     [MONAD_TESTNET.id]: http()
   },
-  // Add storage for persistence
-  storage: typeof window !== 'undefined' ? window.localStorage : undefined,
+  // Add storage for persistence using wagmi's createStorage
+  storage: createStorage({ storage: typeof window !== 'undefined' ? window.localStorage : undefined })
 });
 
 // Frame metadata for sharing
