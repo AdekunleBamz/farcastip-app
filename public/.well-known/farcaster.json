@@ -5,11 +5,11 @@
   "website": "https://farcastipmini.vercel.app",
   "redirectUris": ["https://farcastipmini.vercel.app"],
   "appUrl": "https://farcastipmini.vercel.app",
-  "publisher": "AdekunleBamz",
+  "publisher": "Bamzz",
 
   "accountAssociation": {
     "header": "eyJhbGciOiJFUzI1NksiLCJ0eXAiOiJKV1QifQ",
-    "payload": "eyJkb21haW4iOiJmYXJhdHN0aXBtaW5pLnZlcmNlbC5hcHAifQ",
+    "payload": "eyJkb21haW4iOiJmYXJjYXN0aXBtaW5pLnZlcmNlbC5hcHAifQ",
     "signature": "pWfz_U8sHRy6NNF0OYQIh73IXttg6b3FHPJiKmJdvf93m9jhS-ATLXKgV2xVGWOCuonbaF4Z3VPZ54ZsVLJ1UBw"
   },
 
@@ -20,5 +20,3 @@
     "iconUrl": "https://farcastipmini.vercel.app/icon.png",
     "splashImageUrl": "https://farcastipmini.vercel.app/splash.png",
     "splashBackgroundColor": "#4F46E5"
-  }
-}

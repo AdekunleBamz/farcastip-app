@@ -1,9 +1,0 @@
-{
-  "name": "FarcasTip",
-  "description": "Tip users MON tokens easily through Farcaster frames.",
-  "icon": "https://farcastipmini.vercel.app/icon.png",
-  "website": "https://farcastipmini.vercel.app",
-  "redirectUris": ["https://farcastipmini.vercel.app"],
-  "appUrl": "https://farcastipmini.vercel.app",
-  "publisher": "AdekunleBamz"
-} 
