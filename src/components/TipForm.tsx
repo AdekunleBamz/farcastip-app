@@ -8,7 +8,8 @@ import {
   useSendTransaction, 
   useBalance,
   useChainId,
-  useSwitchChain
+  useSwitchChain,
+  useWaitForTransactionReceipt
 } from 'wagmi';
 import { MONAD_TESTNET } from '../config/constants';
 import { resolveFarcasterUsername } from '../utils/farcaster';
@@ -31,9 +32,17 @@ export function TipForm() {
   const [amount, setAmount] = useState("");
   const [isResolvingUsername, setIsResolvingUsername] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [transactionStatus, setTransactionStatus] = useState<'idle' | 'pending' | 'success' | 'error'>('idle');
+  const [transactionHash, setTransactionHash] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   // Updated for wagmi v2
-  const { sendTransaction, isPending } = useSendTransaction();
+  const { sendTransaction, isPending, data: hash } = useSendTransaction();
+  
+  // Add transaction receipt watcher
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
+    hash,
+  });
 
   const isCorrectNetwork = chainId === MONAD_TESTNET.id;
 
@@ -61,6 +70,36 @@ export function TipForm() {
     }
   };
 
+  // Reset form and show success message
+  const resetForm = () => {
+    setRecipient("");
+    setAmount("");
+    setError(null);
+    setTransactionStatus('idle');
+    setTransactionHash(null);
+    setSuccessMessage(null);
+  };
+
+  // Handle transaction status changes
+  useEffect(() => {
+    if (hash) {
+      setTransactionHash(hash);
+      setTransactionStatus('pending');
+    }
+  }, [hash]);
+
+  useEffect(() => {
+    if (isConfirmed) {
+      setTransactionStatus('success');
+      setSuccessMessage(`Tip sent successfully! Transaction hash: ${transactionHash?.slice(0, 6)}...${transactionHash?.slice(-4)}`);
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        resetForm();
+        setIsModalOpen(false);
+      }, 3000);
+    }
+  }, [isConfirmed, transactionHash]);
+
   const handleSendTip = async () => {
     if (!isConnected || !address) {
       setError("Please connect your wallet first");
@@ -78,6 +117,8 @@ export function TipForm() {
     }
 
     try {
+      setTransactionStatus('pending');
+      setError(null);
       const amountInWei = parseEther(amount);
       
       await sendTransaction({
@@ -87,6 +128,9 @@ export function TipForm() {
     } catch (err) {
       console.error("Error sending tip:", err);
       setError(err instanceof Error ? err.message : "Failed to send tip");
+      setTransactionStatus('error');
+      // Reset form after 3 seconds on error
+      setTimeout(resetForm, 3000);
     }
   };
 
@@ -204,6 +248,7 @@ export function TipForm() {
               <button
                 onClick={handleCloseModal}
                 className="text-gray-400 hover:text-gray-500 transition-colors"
+                disabled={transactionStatus === 'pending'}
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -211,7 +256,7 @@ export function TipForm() {
               </button>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Recipient
@@ -222,6 +267,7 @@ export function TipForm() {
                   onChange={(e) => handleRecipientChange(e.target.value)}
                   placeholder="@username or 0x..."
                   className="input-primary"
+                  disabled={transactionStatus === 'pending'}
                 />
                 {isResolvingUsername && (
                   <p className="mt-2 text-sm text-gray-500 flex items-center">
@@ -246,8 +292,28 @@ export function TipForm() {
                   step="0.0001"
                   min="0"
                   className="input-primary"
+                  disabled={transactionStatus === 'pending'}
                 />
               </div>
+
+              {/* Transaction Status Messages */}
+              {transactionStatus === 'pending' && (
+                <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                  <p className="text-sm text-blue-600 flex items-center">
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-blue-500" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    {isConfirming ? 'Confirming transaction...' : 'Sending transaction...'}
+                  </p>
+                </div>
+              )}
+
+              {transactionStatus === 'success' && successMessage && (
+                <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+                  <p className="text-sm text-green-600">{successMessage}</p>
+                </div>
+              )}
 
               {error && (
                 <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
@@ -255,25 +321,26 @@ export function TipForm() {
                 </div>
               )}
 
-              <div className="flex justify-end space-x-3 pt-4">
+              <div className="flex justify-end space-x-3 mt-6">
                 <button
                   onClick={handleCloseModal}
                   className="btn-secondary"
+                  disabled={transactionStatus === 'pending'}
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleSendTip}
-                  disabled={isPending || !recipient || !amount}
+                  disabled={isPending || !recipient || !amount || transactionStatus === 'pending'}
                   className="btn-primary"
                 >
-                  {isPending ? (
+                  {transactionStatus === 'pending' ? (
                     <span className="flex items-center">
                       <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                       </svg>
-                      Sending...
+                      {isConfirming ? 'Confirming...' : 'Sending...'}
                     </span>
                   ) : (
                     'Send Tip'
