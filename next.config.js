@@ -2,12 +2,17 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['farcastip.vercel.app'], // We'll update this with the actual domain after deployment
-  },
-  // Enable static image optimization
-  images: {
+    domains: ['farcastipmini.vercel.app'],
     unoptimized: true,
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/farcaster.json',
+        destination: '/api/manifest',
+      },
+    ]
   },
 }
 
-module.exports = nextConfig 
+module.exports = nextConfig
