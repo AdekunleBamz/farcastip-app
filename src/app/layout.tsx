@@ -24,10 +24,7 @@ const queryClient = new QueryClient({
 const config = createConfig({
   chains: [MONAD_TESTNET],
   connectors: [
-    farcasterFrame({
-      shimDisconnect: true,
-      shimChainChangedDisconnect: false,
-    })
+    farcasterFrame()
   ],
   transports: {
     [MONAD_TESTNET.id]: http()
