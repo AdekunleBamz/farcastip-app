@@ -21,12 +21,7 @@ const queryClient = new QueryClient({
 const config = createConfig({
   chains: [MONAD_TESTNET],
   connectors: [
-    farcasterFrame({
-      // Add connection persistence
-      shimDisconnect: true,
-      // Increase timeout
-      timeout: 30000, // 30 seconds
-    })
+    farcasterFrame()
   ],
   transports: {
     [MONAD_TESTNET.id]: http()
