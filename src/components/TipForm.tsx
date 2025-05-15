@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { useAccount, useConnect, useSendTransaction } from 'wagmi';
+import { useAccount, useConnect, useDisconnect, useSendTransaction } from 'wagmi';
 import { MONAD_TESTNET } from '../config/constants';
 import { resolveFarcasterUsername } from '../utils/farcaster';
 import { parseEther, isAddress } from 'viem';
 
 export function TipForm() {
   const { connect, connectors } = useConnect();
+  const { disconnect } = useDisconnect();
   const { isConnected, address } = useAccount();
   const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState("");
@@ -91,4 +92,19 @@ export function TipForm() {
       </div>
     );
   }
+
+  return (
+    <div>
+      <div className="mb-4 flex justify-between items-center">
+        <span className="text-sm text-gray-600">Connected: {address?.slice(0, 6)}...{address?.slice(-4)}</span>
+        <button 
+          onClick={() => disconnect()}
+          className="text-sm text-red-500 hover:text-red-600"
+        >
+          Disconnect
+        </button>
+      </div>
+      {/* Rest of the form */}
+    </div>
+  );
 } 
