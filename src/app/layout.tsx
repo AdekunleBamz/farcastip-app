@@ -50,22 +50,35 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <title>FarcasTip App</title>
+        <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="description" content="Send MON test tokens as tips on Monad testnet" />
         
-        {/* Essential OpenGraph tags */}
-        <meta property="og:title" content="FarcasTip" />
-        <meta property="og:description" content="Send MON test tokens as tips on Monad testnet" />
-        <meta property="og:image" content="https://farcastipmini.vercel.app/og-image.png" />
+        {/* Essential OpenGraph tags for Warpcast embed */}
+        <meta property="og:url" content="https://farcastipmini.vercel.app" />
         <meta property="og:type" content="website" />
+        <meta property="og:title" content="FarcasTip - Send MON Tips on Monad" />
+        <meta property="og:description" content="Send MON test tokens as tips on Monad testnet. Connect your wallet and start tipping!" />
+        <meta property="og:image" content="https://farcastipmini.vercel.app/splash.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:site_name" content="FarcasTip" />
         
-        {/* Essential Farcaster Frame tags - using minimal required set */}
+        {/* Twitter Card tags for better social sharing */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="FarcasTip - Send MON Tips on Monad" />
+        <meta name="twitter:description" content="Send MON test tokens as tips on Monad testnet. Connect your wallet and start tipping!" />
+        <meta name="twitter:image" content="https://farcastipmini.vercel.app/splash.png" />
+        
+        {/* Farcaster Frame tags */}
         <meta property="fc:frame" content="vNext" />
         <meta property="fc:frame:image" content="https://farcastipmini.vercel.app/og-image.png" />
         <meta property="fc:frame:button:1" content="Send MON Tip" />
         <meta property="fc:frame:post_url" content="https://farcastipmini.vercel.app/api/frame" />
         
         <link rel="icon" href="/icon.png" />
+        <link rel="canonical" href="https://farcastipmini.vercel.app" />
       </head>
       <body>
         <WagmiProvider config={config}>
