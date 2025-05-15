@@ -33,17 +33,17 @@ const config = createConfig({
 
 // Frame metadata for sharing
 const frameMetadata = {
-  version: "next",
-  imageUrl: "https://farcastipmini.vercel.app/og-image.png",
-  button: {
-    title: "Send MON Tip",
-    action: {
-      type: "launch_frame",
-      url: 'https://farcastipmini.vercel.app',
-      name: "FarcasTip",
-      splashImageUrl: "https://farcastipmini.vercel.app/splash.png",
-      splashBackgroundColor: "#4F46E5"
+  version: "vNext",
+  image: "https://farcastipmini.vercel.app/og-image.png",
+  buttons: [
+    {
+      label: "Send MON Tip",
+      action: "post_redirect"
     }
+  ],
+  postUrl: "https://farcastipmini.vercel.app/api/frame",
+  input: {
+    text: "Enter recipient's Farcaster username or address"
   }
 };
 
@@ -68,7 +68,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <title>FarcasTip App</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="description" content="Send MON test tokens as tips on Monad testnet" />
-        <meta name="fc:frame" content={JSON.stringify(frameMetadata)} />
+        <meta property="og:title" content="FarcasTip" />
+        <meta property="og:description" content="Send MON test tokens as tips on Monad testnet" />
+        <meta property="og:image" content="https://farcastipmini.vercel.app/og-image.png" />
+        <meta property="fc:frame" content={JSON.stringify(frameMetadata)} />
+        <meta property="fc:frame:image" content="https://farcastipmini.vercel.app/og-image.png" />
+        <meta property="fc:frame:button:1" content="Send MON Tip" />
+        <meta property="fc:frame:post_url" content="https://farcastipmini.vercel.app/api/frame" />
+        <meta property="fc:frame:input:text" content="Enter recipient's Farcaster username or address" />
         <link rel="icon" href="/icon.png" />
       </head>
       <body>
