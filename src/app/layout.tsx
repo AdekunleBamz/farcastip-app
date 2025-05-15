@@ -32,8 +32,7 @@ const config = createConfig({
   storage: createStorage({ 
     storage: typeof window !== 'undefined' ? window.localStorage : undefined,
     key: 'farcastip-wagmi-cache'
-  }),
-  autoConnect: true,
+  })
 });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -43,12 +42,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   useEffect(() => {
     const init = async () => {
       try {
+        // Initialize SDK with persistence options
         await sdk.actions.ready({ 
           disableNativeGestures: true,
           onError: (error) => {
             console.error('Farcaster SDK error:', error);
           }
         });
+
+        // Attempt to restore any existing connection
+        if (typeof window !== 'undefined') {
+          const storedConnection = localStorage.getItem('farcastip-wagmi-cache');
+          if (storedConnection) {
+            try {
+              // Trigger a reconnection if we have stored data
+              await sdk.actions.connect();
+            } catch (error) {
+              console.error('Failed to restore connection:', error);
+            }
+          }
+        }
+
         setMounted(true);
       } catch (error) {
         console.error('Failed to initialize Farcaster SDK:', error);
