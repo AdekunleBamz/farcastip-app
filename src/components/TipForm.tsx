@@ -1,8 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useAccount, useConnect, useDisconnect, useSendTransaction, useBalance } from 'wagmi';
-import { useChainId, useSwitchChain } from 'wagmi/actions';
+import { 
+  useAccount, 
+  useConnect, 
+  useDisconnect, 
+  useSendTransaction, 
+  useBalance,
+  useChainId,
+  useSwitchChain
+} from 'wagmi';
 import { MONAD_TESTNET } from '../config/constants';
 import { resolveFarcasterUsername } from '../utils/farcaster';
 import { parseEther, isAddress } from 'viem';
