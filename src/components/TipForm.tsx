@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useAccount, useConnect, useDisconnect, useSendTransaction, useBalance, useNetwork, useSwitchNetwork } from 'wagmi';
+import { useAccount, useConnect, useDisconnect, useSendTransaction, useBalance } from 'wagmi';
+import { useChainId, useSwitchChain } from 'wagmi/actions';
 import { MONAD_TESTNET } from '../config/constants';
 import { resolveFarcasterUsername } from '../utils/farcaster';
 import { parseEther, isAddress } from 'viem';
@@ -10,8 +11,8 @@ export function TipForm() {
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
   const { isConnected, address } = useAccount();
-  const { chain } = useNetwork();
-  const { switchNetwork } = useSwitchNetwork();
+  const chainId = useChainId();
+  const { switchChain } = useSwitchChain();
   const { data: balance } = useBalance({
     address,
     watch: true,
@@ -24,7 +25,7 @@ export function TipForm() {
   // Updated for wagmi v2
   const { sendTransaction, isPending } = useSendTransaction();
 
-  const isCorrectNetwork = chain?.id === MONAD_TESTNET.id;
+  const isCorrectNetwork = chainId === MONAD_TESTNET.id;
 
   const handleRecipientChange = async (value: string) => {
     setRecipient(value);
@@ -141,7 +142,7 @@ export function TipForm() {
         {!isCorrectNetwork && (
           <div className="mt-2">
             <button
-              onClick={() => switchNetwork?.(MONAD_TESTNET.id)}
+              onClick={() => switchChain({ chainId: MONAD_TESTNET.id })}
               className="w-full bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600 transition-colors text-sm"
             >
               Switch to Monad Testnet
