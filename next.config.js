@@ -4,15 +4,7 @@ const nextConfig = {
   images: {
     domains: ['farcastipmini.vercel.app'],
     unoptimized: true,
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/farcaster.json',
-        destination: '/api/manifest',
-      },
-    ]
-  },
+  }
 }
 
 module.exports = nextConfig
