@@ -31,22 +31,6 @@ const config = createConfig({
   storage: createStorage({ storage: typeof window !== 'undefined' ? window.localStorage : undefined })
 });
 
-// Frame metadata for sharing
-const frameMetadata = {
-  version: "vNext",
-  image: "https://farcastipmini.vercel.app/og-image.png",
-  buttons: [
-    {
-      label: "Send MON Tip",
-      action: "post_redirect"
-    }
-  ],
-  postUrl: "https://farcastipmini.vercel.app/api/frame",
-  input: {
-    text: "Enter recipient's Farcaster username or address"
-  }
-};
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
@@ -68,14 +52,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <title>FarcasTip App</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="description" content="Send MON test tokens as tips on Monad testnet" />
+        
+        {/* Essential OpenGraph tags */}
         <meta property="og:title" content="FarcasTip" />
         <meta property="og:description" content="Send MON test tokens as tips on Monad testnet" />
         <meta property="og:image" content="https://farcastipmini.vercel.app/og-image.png" />
-        <meta property="fc:frame" content={JSON.stringify(frameMetadata)} />
+        <meta property="og:type" content="website" />
+        
+        {/* Essential Farcaster Frame tags - using minimal required set */}
+        <meta property="fc:frame" content="vNext" />
         <meta property="fc:frame:image" content="https://farcastipmini.vercel.app/og-image.png" />
         <meta property="fc:frame:button:1" content="Send MON Tip" />
         <meta property="fc:frame:post_url" content="https://farcastipmini.vercel.app/api/frame" />
-        <meta property="fc:frame:input:text" content="Enter recipient's Farcaster username or address" />
+        
         <link rel="icon" href="/icon.png" />
       </head>
       <body>
