@@ -7,9 +7,12 @@
   "app_url": "https://farcastipmini.vercel.app",
   "frame_url": "https://farcastipmini.vercel.app/api/frame",
   "version": "1",
-  "accountAssociation": {
-    "header": "eyJmaWQiOjY1MzQ3OSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDBjMDkwNjQzOUM2YTZiRDVmNzI0MDkyZjdCZWNlZDkyY2ZhNDI4QTEifQ",
-    "payload": "eyJkb21haW4iOiJmYXJjYXN0aXBtaW5pLnZlcmNlbC5hcHAifQ",
-    "signature": "MHg0YzkwMmJmNWE2MTI5ZDE0MTJjZWI3NzE1ODc2MzcwZWY2ZGE1MDgyMzBmODRhNzcyYTc2MjdmYTFjMDhkZDQ1NjIxMjM1OGQ5YzdmM2ZjMDE4M2E0MThmYmI0NDU1ZDBjN2NiNmYxMTk2OTFkMzljYTBhZGMwNjk5ZWFjODYxYzFi"
+  "frame": {
+    "version": "1",
+    "name": "FarcasTip",
+    "homeUrl": "https://farcastipmini.vercel.app",
+    "iconUrl": "https://farcastipmini.vercel.app/icon.png",
+    "splashImageUrl": "https://farcastipmini.vercel.app/splash.png",
+    "splashBackgroundColor": "#4F46E5"
   }
 }
