@@ -1,0 +1,19 @@
+{
+  "name": "FarcasTip",
+  "short_name": "FarcasTip",
+  "description": "Send MON tips on Monad testnet to Farcaster users",
+  "icon": "/icon.png",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#4F46E5",
+  "background_color": "#ffffff",
+  "categories": ["finance", "social", "web3"],
+  "screenshots": [
+    {
+      "src": "/splash.png",
+      "sizes": "1200x630",
+      "type": "image/png"
+    }
+  ]
+} 

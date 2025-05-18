@@ -10,15 +10,15 @@
     "convert-images": "ts-node scripts/convert-images.ts"
   },
   "dependencies": {
-    "@farcaster/frame-sdk": "0.0.41",
-    "@farcaster/frame-wagmi-connector": "0.0.30",
+    "@farcaster/frame-sdk": "^0.0.43",
+    "@farcaster/frame-wagmi-connector": "^0.0.32",
     "@tanstack/react-query": "^5.0.0",
     "ethers": "6.10.0",
     "next": "14.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "viem": "^2.21.55",
-    "wagmi": "^2.5.7"
+    "viem": "^2.29.3",
+    "wagmi": "^2.15.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

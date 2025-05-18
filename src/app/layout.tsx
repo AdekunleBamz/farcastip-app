@@ -1,153 +1,82 @@
-"use client";
-
-import { WagmiProvider, createConfig, http } from 'wagmi';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { farcasterFrame } from '@farcaster/frame-wagmi-connector';
-import { sdk } from '@farcaster/frame-sdk';
-import { MONAD_TESTNET } from '../config/constants';
-import { useEffect, useState } from 'react';
-import { createStorage } from 'wagmi';
+import { Metadata } from 'next';
 import './globals.css';
+import Providers from './Providers';
 
-// Create a client with longer persistence
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 30, // 30 minutes
-      gcTime: 1000 * 60 * 60, // 1 hour
-      retry: 3,
-      retryDelay: 1000,
-      refetchOnWindowFocus: true, // Refetch when window regains focus
-    },
+// Define metadata for the app
+export const metadata: Metadata = {
+  title: 'FarcasTip - Send MON Tips on Monad',
+  description: 'Easily tip Farcaster users with MON tokens on Monad testnet.',
+  metadataBase: new URL('https://farcastipmini.vercel.app'),
+  openGraph: {
+    type: 'website',
+    title: 'FarcasTip - Send MON Tips on Monad',
+    description: 'Easily tip Farcaster users with MON tokens on Monad testnet.',
+    url: 'https://farcastipmini.vercel.app',
+    siteName: 'FarcasTip',
+    images: [
+      {
+        url: 'https://farcastipmini.vercel.app/og-image.png?v=2',
+        width: 1200,
+        height: 630,
+        alt: 'FarcasTip Preview',
+      },
+    ],
   },
-});
-
-// Configure wagmi with Farcaster Frame connector and enhanced persistence
-const config = createConfig({
-  chains: [MONAD_TESTNET],
-  connectors: [
-    farcasterFrame()
-  ],
-  transports: {
-    [MONAD_TESTNET.id]: http()
+  twitter: {
+    card: 'summary_large_image',
+    title: 'FarcasTip - Send MON Tips on Monad',
+    description: 'Easily tip Farcaster users with MON tokens on Monad testnet.',
+    images: ['https://farcastipmini.vercel.app/og-image.png?v=2'],
   },
-  storage: createStorage({ 
-    storage: typeof window !== 'undefined' ? window.localStorage : undefined,
-    key: 'farcastip-wagmi-cache'
-  })
-});
+  other: {
+    'farcaster:app': 'true'
+  },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
+  themeColor: '#4F46E5',
+  manifest: '/manifest.json',
+  icons: {
+    icon: [
+      { url: '/icon.png', type: 'image/png' },
+      { url: '/icon.svg', type: 'image/svg+xml' }
+    ],
+    apple: [
+      { url: '/icon.png', type: 'image/png' }
+    ]
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'FarcasTip'
+  },
+  applicationName: 'FarcasTip',
+  formatDetection: {
+    telephone: false,
+  }
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const [mounted, setMounted] = useState(false);
-
-  // Initialize Farcaster SDK and handle connection persistence
-  useEffect(() => {
-    let mounted = true;
-
-    const init = async () => {
-      try {
-        // Initialize SDK with minimal options
-        await sdk.actions.ready();
-        
-        // Only update state if component is still mounted
-        if (mounted) {
-          setMounted(true);
-        }
-      } catch (error) {
-        console.error('Farcaster SDK initialization failed:', error);
-        // Still set mounted to true to allow the app to function
-        if (mounted) {
-          setMounted(true);
-        }
-      }
-    };
-
-    // Start initialization
-    init();
-
-    // Cleanup function
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  // Show loading state while initializing
-  if (!mounted) {
-    return (
-      <html lang="en" className="h-full bg-gradient-to-br from-indigo-50 to-blue-50">
-        <head>
-          <title>FarcasTip - Loading...</title>
-        </head>
-        <body className="min-h-screen flex items-center justify-center">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading FarcasTip...</p>
-          </div>
-        </body>
-      </html>
-    );
-  }
-
   return (
     <html lang="en" className="h-full bg-gradient-to-br from-indigo-50 to-blue-50">
       <head>
-        <title>FarcasTip - Send MON Tips on Monad Testnet</title>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        
-        {/* Basic meta tags */}
-        <meta name="description" content="Send MON tips on Monad testnet. A simple and secure way to tip your favorite Farcaster users with MON tokens." />
-        <meta name="theme-color" content="#4F46E5" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        
-        {/* OpenGraph tags */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://farcastipmini.vercel.app" />
-        <meta property="og:title" content="FarcasTip - Send MON Tips" />
-        <meta property="og:description" content="Send MON tips on Monad testnet. A simple and secure way to tip your favorite Farcaster users with MON tokens." />
-        <meta property="og:image" content="https://farcastipmini.vercel.app/og-image.png" />
-        <meta property="og:image:width" content="3750" />
-        <meta property="og:image:height" content="1969" />
-        <meta property="og:image:type" content="image/png" />
-        <meta property="og:site_name" content="FarcasTip" />
-        
-        {/* Twitter Card tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@farcastip" />
-        <meta name="twitter:title" content="FarcasTip - Send MON Tips" />
-        <meta name="twitter:description" content="Send MON tips on Monad testnet. A simple and secure way to tip your favorite Farcaster users with MON tokens." />
-        <meta name="twitter:image" content="https://farcastipmini.vercel.app/og-image.png" />
-        
-        {/* Farcaster Frame tags - Updated for v1 */}
-        <meta property="fc:frame" content="1" />
-        <meta property="fc:frame:image" content="https://farcastipmini.vercel.app/og-image.png" />
-        <meta property="fc:frame:image:aspect_ratio" content="1.91:1" />
-        <meta property="fc:frame:button:1" content="Send MON Tip" />
-        <meta property="fc:frame:button:1:action" content="post_redirect" />
-        <meta property="fc:frame:post_url" content="https://farcastipmini.vercel.app/api/frame" />
-        <meta property="fc:frame:input:text" content="Enter Farcaster username or address" />
-        <meta property="fc:frame:state" content="{}" />
-        
-        {/* Required meta tags for frame detection */}
-        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        
-        <link rel="icon" href="/icon.png" />
-        <link rel="canonical" href="https://farcastipmini.vercel.app" />
-        
-        {/* Add Google Fonts */}
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        {/* Farcaster Mini App Embed Meta Tag */}
+        <meta
+          name="fc:frame"
+          content='{"version":"next","imageUrl":"https://farcastipmini.vercel.app/og-image.png?v=2","button":{"title":"Send MON Tip","action":{"type":"launch_frame","url":"https://farcastipmini.vercel.app"}}}'
+        />
+        {/* You can keep other meta tags here if needed */}
       </head>
       <body className="min-h-screen font-sans antialiased">
         <div className="min-h-screen flex flex-col">
-          <WagmiProvider config={config}>
-            <QueryClientProvider client={queryClient}>
-              <main className="flex-1 container mx-auto px-4 py-8 max-w-4xl">
-                {children}
-              </main>
-            </QueryClientProvider>
-          </WagmiProvider>
+          <Providers>
+            <main className="flex-1 container mx-auto px-4 py-8 max-w-4xl">
+              {children}
+            </main>
+          </Providers>
         </div>
       </body>
     </html>
