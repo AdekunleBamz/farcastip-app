@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     siteName: 'FarcasTip',
     images: [
       {
-        url: 'https://farcastipmini.vercel.app/og-image.png?v=2',
+        url: 'https://farcastipmini.vercel.app/og-image.png', // Removed ?v=2
         width: 1200,
         height: 630,
         alt: 'FarcasTip Preview',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'FarcasTip - Send MON Tips on Monad',
     description: 'Easily tip Farcaster users with MON tokens on Monad testnet.',
-    images: ['https://farcastipmini.vercel.app/og-image.png?v=2'],
+    images: ['https://farcastipmini.vercel.app/og-image.png'], // Removed ?v=2
   },
   other: {
     'farcaster:app': 'true'
@@ -59,15 +59,32 @@ export const metadata: Metadata = {
   }
 };
 
+const frameJson = {
+  version: "next",
+  imageUrl: "https://farcastipmini.vercel.app/og-image.png",
+  button: {
+    title: "Send MON Tip",
+    action: {
+      type: "launch_frame",
+      name: "FarcasTip",
+      url: "https://farcastipmini.vercel.app/",
+      splashImageUrl: "https://farcastipmini.vercel.app/icon.png",
+      splashBackgroundColor: "#4F46E5"
+    }
+  }
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="h-full bg-gradient-to-br from-indigo-50 to-blue-50">
       <head>
-        {/* Farcaster Mini App Embed Meta Tag */}
         <meta
           name="fc:frame"
-          content='{"version":"next","imageUrl":"https://farcastipmini.vercel.app/og-image.png?v=2","button":{"title":"Send MON Tip","action":{"type":"launch_frame","url":"https://farcastipmini.vercel.app"}}}'
+          content={JSON.stringify(frameJson)}
         />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charSet="UTF-8" />
+        <link rel="manifest" href="/manifest.json" />
         {/* You can keep other meta tags here if needed */}
       </head>
       <body className="min-h-screen font-sans antialiased">
